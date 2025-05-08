@@ -32,6 +32,87 @@ order: 1
       Utilize **portas lógicas digitais** (**AND, OR, NOT**) para implementar as expressões booleanas obtidas no passo anterior e represente o circuito usando um **diagrama esquemático**.  
 
 
+ **Solução: Circuito Lógico para Controle de Bomba e Eletroválvula**
+
+ **1. Tabela-Verdade**
+
+| **A** (Inferior cheia) | **B** (Inferior vazia) | **C** (Superior cheia) | **Bomba (P)** | **Eletroválvula (V)** |
+|-----------------------|-----------------------|-----------------------|--------------|----------------------|
+| 0                     | 0                     | 0                     | 1            | 1                    |
+| 0                     | 0                     | 1                     | 0            | 1                    |
+| 0                     | 1                     | 0                     | 0            | 1                    |
+| 0                     | 1                     | 1                     | 0            | 1                    |
+| 1                     | 0                     | 0                     | 1            | 0                    |
+| 1                     | 0                     | 1                     | 0            | 0                    |
+| 1                     | 1                     | 0                     | 0            | 0                    |
+| 1                     | 1                     | 1                     | 0            | 0                    |
+
+**Legenda:**
+- **A = 1**: Caixa inferior cheia.  
+- **B = 1**: Caixa inferior vazia.  
+- **C = 1**: Caixa superior cheia.  
+- **P = 1**: Bomba ligada.  
+- **V = 1**: Eletroválvula aberta.  
+
+**Regras aplicadas:**
+1. **Bomba (P) liga** se:
+   - Caixa superior **não está cheia** (\(C = 0\)) **E** caixa inferior **não está vazia** (\(B = 0\)).
+2. **Eletroválvula (V) abre** se:
+   - Caixa inferior **não está cheia** (\(A = 0\)).
+
+---
+
+ **2. Expressões Lógicas**
+
+- **Bomba (P)**:
+  \[
+  P = \overline{C} \cdot \overline{B}
+  \]
+  - **Explicação**: A bomba só liga se \(C = 0\) (superior não cheia) **E** \(B = 0\) (inferior não vazia).
+
+- **Eletroválvula (V)**:
+  \[
+  V = \overline{A}
+  \]
+  - **Explicação**: A válvula abre se \(A = 0\) (inferior não cheia).
+
+---
+
+ **3. Diagrama Lógico**
+
+**Componentes necessários:**
+- **Porta NOT (inversor)**: Para \(\overline{A}\), \(\overline{B}\), \(\overline{C}\).
+- **Porta AND**: Para combinar \(\overline{C}\) e \(\overline{B}\) (bomba).
+- **Porta NOT direta**: Para \(\overline{A}\) (eletroválvula).
+
+**Esquema do circuito:**
+1. **Entradas**:
+   - \(A\), \(B\), \(C\) conectados a inversores para gerar \(\overline{A}\), \(\overline{B}\), \(\overline{C}\).
+2. **Bomba (P)**:
+   - \(\overline{C}\) e \(\overline{B}\) conectados a uma porta AND.
+3. **Eletroválvula (V)**:
+   - \(\overline{A}\) conectado diretamente à saída \(V\).
+
+**Representação gráfica simplificada:**
+```
+A ----[NOT]---- V
+B ----[NOT]----|
+               |----[AND]---- P
+C ----[NOT]----|
+```
+
+---
+
+ **Resumo Final**
+- **Bomba (P)**: Ligada apenas se \(C = 0\) **E** \(B = 0\) (\(\overline{C} \cdot \overline{B}\)).
+- **Eletroválvula (V)**: Aberta se \(A = 0\) (\(\overline{A}\)).
+- **Circuito**: Usa **2 portas NOT** (para \(\overline{B}\) e \(\overline{C}\)), **1 porta AND** (para a bomba) e **1 NOT direto** (para a válvula).
+
+Este projeto garante:
+✔ Bomba só liga quando há água na inferior e a superior precisa de abastecimento.  
+✔ Válvula só abre se a caixa inferior não estiver cheia.  
+✔ Prevenção de desperdício e falhas no sistema.
+
 2. **Circuito Lógico para Controle de Máquinas com Prioridade**
    
    Uma indústria possui quatro máquinas de alta potência, identificadas como Máquina 1, Máquina 2, Máquina 3 e Máquina 4. Por questões de segurança e consumo de energia, é permitido o funcionamento simultâneo de, no máximo, duas máquinas. Além disso, existe uma hierarquia de prioridade entre elas: Máquina 1 tem prioridade sobre a Máquina 2, que tem prioridade sobre a Máquina 3, que, por sua vez, tem prioridade sobre a Máquina 4.
@@ -62,4 +143,4 @@ order: 1
       B) $ S = A.B.C.M  $
       C) $ S = (A + B + C)M  $
       D) $ S = A + B + C + M  $
-      E) $ S = (A + B + C)\overline{M}  $
+ ✅ E) $ S = (A + B + C)\overline{M}  $
